@@ -7,7 +7,7 @@ export function noticeBg(msg, fn?) {
 }
 
 export function noticeIframe(msg) {
-  const iframe: HTMLIFrameElement = <HTMLIFrameElement>document.getElementById(IFRAME_ID)
+  const iframe: HTMLIFrameElement = <HTMLIFrameElement>document.getElementById(IFRAME_ID);
   const iframeWindow = iframe.contentWindow;
 
   iframeWindow.postMessage(msg, '*');

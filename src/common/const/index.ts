@@ -3,18 +3,18 @@ export const PAGE_ACTIONS = {
   RECORD: 'recordAction',
   AUTOMATIONS: 'getAutomations',
   REFRESH_AUTOMATIONS: 'refreshAutomations'
-}
+};
 
 export const WEB_ACTIONS = {
   INSTALL_AUTOMATION: 'installAutomation',
   INSTALL_DONE: 'installDone'
-}
+};
 
 export const APP_ACTIONS = {
   IMPORT_DATA: 'importData'
-}
+};
 
-export const IFRAME_ID = 'steward-helper-iframe'
+export const IFRAME_ID = 'steward-helper-iframe';
 
 export const BUILDIN_ACTIONS = {
   HIGHLIGHT_ENGLISH_SYNTAX: 'highlightEnglishSyntax',
@@ -27,7 +27,7 @@ export const BUILDIN_ACTIONS = {
   FULL_SCREEN: 'fullScreen',
   TIME_UPDATE: 'timeupdate',
   CLICK: 'click'
-}
+};
 
 export const BUILDIN_ACTION_CONFIGS = [
   {
@@ -90,4 +90,4 @@ export const BUILDIN_ACTION_CONFIGS = [
     contexts: ['all'],
     asCommand: false
   }
-]
+];

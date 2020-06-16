@@ -23,17 +23,17 @@ function reload() {
 export function Options() {
   const onExportClick = useCallback(() => {
     exportAndDownload()
-  }, [])
+  }, []);
   const onImportFileBeforeUpload = useCallback((file) => {
     convertFile2Blob(file).then(importDBFile).then(blob => {
-      reload()
+      reload();
       message.success('Import done!')
     }).catch((err) => {
       message.error('Import failed!')
-    })
+    });
 
     return false
-  }, [])
+  }, []);
 
   return (
     <div className="container">

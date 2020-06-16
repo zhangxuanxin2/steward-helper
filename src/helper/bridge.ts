@@ -3,12 +3,12 @@ import { IFRAME_ID } from "../common/const"
 import { NOTICE_TARGET } from "../common/enum"
 import { PageMsg } from "../common/types"
 import { noticeBg, noticeIframe } from './event';
-import $ = require('jquery')
+import $ = require('jquery');
 
 export function createBridge() {
-  const callbacks = {}
-  const registerFuncs = {}
-  let cbId = 0
+  const callbacks = {};
+  const registerFuncs = {};
+  let cbId = 0;
 
   const bridge = {
     inited: false,
@@ -27,7 +27,7 @@ export function createBridge() {
       }
     },
     async invoke(action, data, callback, target: NOTICE_TARGET = NOTICE_TARGET.BACKGROUND) {
-      await bridge.ready()
+      await bridge.ready();
       cbId = cbId + 1;
       callbacks[cbId] = callback;
 
@@ -36,7 +36,7 @@ export function createBridge() {
         ext_from: 'content',
         data,
         callbackId: cbId
-      }
+      };
       if (target === NOTICE_TARGET.BACKGROUND) {
         noticeBg(msg)
       } else {
@@ -80,9 +80,9 @@ export function createBridge() {
       }
       registerFuncs[action].push(callback);
     }
-  }
+  };
 
   return bridge;
 }
 
-export const appBridge = createBridge()
+export const appBridge = createBridge();

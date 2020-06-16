@@ -2,7 +2,7 @@ import { appBridge } from './bridge'
 import { WEB_ACTIONS } from '../common/const';
 
 export function handleWebEvents(event) {
-  const { action, data } = event.detail
+  const { action, data } = event.detail;
 
   if (action) {
     switch(action) {
@@ -21,7 +21,7 @@ export function noticeWeb(action, data) {
       action,
       data
     }
-  })
+  });
 
   document.dispatchEvent(event);
 }

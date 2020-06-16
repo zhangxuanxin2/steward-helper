@@ -10,7 +10,7 @@ export async function saveAutomation(instructions: string, pattern: string, runA
         if (id) {
             const result = await automationService.update(id, {
                 instructions, pattern, runAt
-            })
+            });
 
             return Response.ok(result);
         } else {

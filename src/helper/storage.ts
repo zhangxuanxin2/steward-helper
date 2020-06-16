@@ -11,10 +11,10 @@ function getTab() {
 }
 
 export default async function hanlder(req) {
-  const { data, action } = req
+  const { data, action } = req;
 
   if (action === 'storages.getAll') {
-    const tabs = await getTab()
+    const tabs = await getTab();
     return getAll(data.tabId || tabs[0].id, data)
   } else {
     return Promise.resolve({})

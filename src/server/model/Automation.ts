@@ -10,7 +10,7 @@ export default class Automation implements IAutomation {
   active?: boolean;
   createTime?: number;
   updateTime?: number;
-  deleted?: boolean
+  deleted?: boolean;
 
   constructor(instructions: string, runAt: RunAt = RunAt.END, pattern: string, rid?: number, createTime?: number) {
     this.instructions = instructions;

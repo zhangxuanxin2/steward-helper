@@ -13,8 +13,8 @@ import { noticeBg } from '../../helper/event';
 import { PAGE_ACTIONS } from '../../common/const';
 
 export function AutomationsPanel() {
-  const { state, dispatch } = useContext(PageContext)
-  const { amFormEditing } = state
+  const { state, dispatch } = useContext(PageContext);
+  const { amFormEditing } = state;
   return (
     <div>
       {
@@ -29,7 +29,7 @@ export function AutomationsPanel() {
 }
 
 function validateAmForm(form) {
-  const { instructions, pattern } = form
+  const { instructions, pattern } = form;
   if (instructions && pattern) {
     return true
   } else {
@@ -42,17 +42,17 @@ function onAmFormChange(attrs, dispatch) {
 }
 
 function AutomationEditor() {
-  const { state, dispatch } = useContext(PageContext)
-  const { automationForm: form } = state
-  const [saving, setSaving] = useState(false)
+  const { state, dispatch } = useContext(PageContext);
+  const { automationForm: form } = state;
+  const [saving, setSaving] = useState(false);
 
   function onAmEditorSaveClick() {
     if (validateAmForm(form)) {
-      setSaving(true)
+      setSaving(true);
       automationsController.saveAutomation(form.instructions, form.pattern, form.runAt, form.id).then((resp) => {
         if (resp.code === 0) {
-          setSaving(false)
-          dispatch({ type: ACTIONS.AUTOMATION_FORM_CLOSE, payload: null})
+          setSaving(false);
+          dispatch({ type: ACTIONS.AUTOMATION_FORM_CLOSE, payload: null});
           noticeBg({
             action: PAGE_ACTIONS.REFRESH_AUTOMATIONS
           })
@@ -95,7 +95,7 @@ const AutomationsColumns = [
     width: '120px',
     render: (text, record) => <OpBtns record={record} />,
   }
-]
+];
 
 function OpBtns(props) {
 
@@ -109,7 +109,7 @@ function OpBtns(props) {
 }
 
 function SwitchBtn(props) {
-  const { state, dispatch } = useModel()
+  const { state, dispatch } = useModel();
   const onChange = useCallback((checked) => {
     props.record.active = checked;
     automationsController.updateAutomation(props.record.id, {
@@ -119,7 +119,7 @@ function SwitchBtn(props) {
         noticeBg({ action: PAGE_ACTIONS.REFRESH_AUTOMATIONS })
       })
     });
-  }, [])
+  }, []);
 
   return (
     <Switch size="small" checked={props.record.active} onChange={onChange}/>
@@ -127,10 +127,10 @@ function SwitchBtn(props) {
 }
 
 function EditBtn(props) {
-  const { state, dispatch } = useModel()
+  const { state, dispatch } = useModel();
   const onClick = useCallback(() => {
     dispatch({ type: ACTIONS.AUTOMATION_FORM_UPDATE, payload: props.record })
-  }, [])
+  }, []);
 
   return (
     <span onClick={onClick}><EditOutlined translate="no"/></span>
@@ -138,15 +138,15 @@ function EditBtn(props) {
 }
 
 function DeleteBtn(props) {
-  const { state, dispatch } = useModel()
+  const { state, dispatch } = useModel();
   const onClick = useCallback(() => {
     automationsController.deleteItem(props.record.id).then(() => {
-      fetchList(state, dispatch)
+      fetchList(state, dispatch);
       noticeBg({
         action: PAGE_ACTIONS.REFRESH_AUTOMATIONS
       })
     })
-  }, [])
+  }, []);
 
   return (
     <span onClick={onClick}><DeleteOutlined translate="no"/></span>
@@ -162,12 +162,12 @@ function fetchList(state, dispatch) {
 }
 
 function Automations(props) {
-  const { host } = props
-  const { state, dispatch } = useContext(PageContext)
+  const { host } = props;
+  const { state, dispatch } = useContext(PageContext);
 
   useEffect(() => {
     fetchList(state, dispatch)
-  }, [host, state.amFormEditing])
+  }, [host, state.amFormEditing]);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import $ = require('jquery')
+import $ = require('jquery');
 import keyboardJS from 'keyboardjs'
 import getCssSelector from 'css-selector-generator';
 import { noticeBg } from './event';
@@ -71,20 +71,20 @@ function start() {
   }
 
   keyboardJS.bind('up', (event) => {
-    event.preventDefault()
-    const $p = $(`.${outlineCls}`).parent()
+    event.preventDefault();
+    const $p = $(`.${outlineCls}`).parent();
 
     if ($p.length) {
-      $(`.${outlineCls}`).removeClass(outlineCls)
+      $(`.${outlineCls}`).removeClass(outlineCls);
       $p.addClass(outlineCls)
     }
-  })
+  });
 
   return stop;
 }
 
 function recordAction(actionName, elem?: HTMLElement) {
-  const action = getAction(actionName, elem)
+  const action = getAction(actionName, elem);
 
   appBridge.invoke(PAGE_ACTIONS.RECORD, {
     content: action, url: window.location.href, domain: window.location.host
@@ -96,15 +96,15 @@ function clear() {
   $(`.${outlineCls}`).removeClass(outlineCls);
 }
 
-let outlinedCallback
+let outlinedCallback;
 function startOutline(callback) {
-  outlinedCallback = callback
+  outlinedCallback = callback;
   stop && stop();
   stop = start();
 }
 
 function stopOutline() {
-  outlinedCallback = null
+  outlinedCallback = null;
   stop && stop();
   clear();
 }
@@ -117,7 +117,7 @@ function setup() {
     $(document).on(stopOutlineEvt, stopOutline);
 
     document.addEventListener('click', function (event) {
-      const $target = $(event.target).closest(`.${outlineCls}`)
+      const $target = $(event.target).closest(`.${outlineCls}`);
 
       if ($target.length) {
         event.stopPropagation();
@@ -134,11 +134,11 @@ function setup() {
 
         return false;
       }
-    }, true)
+    }, true);
 
     keyboardJS.bind('esc', () => {
       stopOutline()
-    })
+    });
 
     isSetup = true
   }
@@ -149,13 +149,13 @@ function getOutlinedElem() {
 }
 
 export function exec(fn) {
-  setup()
+  setup();
   startOutline(fn)
 }
 
 function getAction(actionName: string, elem?: HTMLElement) {
   if (elem) {
-    const selector = getCssSelector(elem, { blacklist: [/ext-hp/]})
+    const selector = getCssSelector(elem, { blacklist: [/ext-hp/]});
   
     return `${actionName}@${selector}`
   } else {
@@ -178,7 +178,7 @@ window.addEventListener('message', event => {
 function getExecOptions(modifiers = []) {
   const options = {
     silent: true
-  }
+  };
 
   modifiers.forEach((item) => {
     const [key, ...value] = item.split('!');
@@ -191,15 +191,15 @@ function getExecOptions(modifiers = []) {
     } else {
       options[key] = true
     }
-  })
+  });
 
   return options
 }
 
 export function exceAutomation(content, times = 0) {
-  const [ actionStr, selector ] = content.split('@')
-  const [ action, ...modifiers ] = actionStr.split('^')
-  const elem = document.querySelector(selector)
+  const [ actionStr, selector ] = content.split('@');
+  const [ action, ...modifiers ] = actionStr.split('^');
+  const elem = document.querySelector(selector);
 
   function tryAgain() {
     if (times < 5) {
@@ -210,14 +210,14 @@ export function exceAutomation(content, times = 0) {
   }
   function exec(instance) {
     instance.autoMationFn = () => {
-      times = 0
+      times = 0;
       tryAgain()
-    }
+    };
     instance.run(elem, getExecOptions(modifiers))
   }
 
   if (elem) {
-    const instance = findAction(action)
+    const instance = findAction(action);
 
     if (instance) {
       exec(instance)
@@ -231,7 +231,7 @@ declare global {
   interface Window { exceAutomation: any; }
 }
 
-window.exceAutomation = exceAutomation
+window.exceAutomation = exceAutomation;
 
 $(() => {
   noticeBg({
@@ -246,7 +246,7 @@ $(() => {
       })
     }
   })
-})
+});
 
 const helper: DomHelper = {
   actionCache: {
@@ -255,7 +255,7 @@ const helper: DomHelper = {
   },
 
   exec(fn) {
-    setup()
+    setup();
     startOutline(fn)
   },
 
@@ -273,22 +273,22 @@ const helper: DomHelper = {
   invoke: appBridge.invoke,
 
   actions: []
-}
+};
 
 function install() {
-  new Download(helper)
-  new FullScreen(helper)
-  new HashElement(helper)
-  new HighlightEnglishSyntax(helper)
-  new KillElement(helper)
-  new ReadMode(helper)
-  new TimeUpdate(helper)
-  new ClickElement(helper)
-  new CodeCopy(helper)
+  new Download(helper);
+  new FullScreen(helper);
+  new HashElement(helper);
+  new HighlightEnglishSyntax(helper);
+  new KillElement(helper);
+  new ReadMode(helper);
+  new TimeUpdate(helper);
+  new ClickElement(helper);
+  new CodeCopy(helper);
   new GotoElement(helper)
 }
 
-install()
+install();
 
 function findAction(name: string): Base | null {
   return helper.actions.find(item => item.name === name)
@@ -305,7 +305,7 @@ function getStyles() {
 }
 
 export function startAction(actionName: string) {
-  const action = findAction(actionName)
+  const action = findAction(actionName);
 
   if (action) {
     action.start()
@@ -313,10 +313,10 @@ export function startAction(actionName: string) {
 }
 
 export default function (req) {
-  const { data, action } = req
+  const { data, action } = req;
 
   if (action === 'dom.outline') {
-    openOutline()
+    openOutline();
 
     return Promise.resolve({})
   } else {
