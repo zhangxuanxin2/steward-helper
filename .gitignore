@@ -64,3 +64,9 @@ Thumbs.db
 # Text Editors
 *.vscode
 *.sublime
+.idea/.gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/steward-helper.iml
+.idea/vcs.xml
+.gitignore
