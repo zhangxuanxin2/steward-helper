@@ -1,15 +1,15 @@
 import Base, { ExecOptions, defaultExecOptions } from './base'
 import { BUILDIN_ACTIONS } from '../common/const';
 import keyboardJS from 'keyboardjs'
-import $ = require('jquery')
+import $ = require('jquery');
 
 export default class ReadMode extends Base {
-  name = BUILDIN_ACTIONS.READ_MODE
-  shouldRecord = true
-  cls = 's-a-rm-hn'
+  name = BUILDIN_ACTIONS.READ_MODE;
+  shouldRecord = true;
+  cls = 's-a-rm-hn';
   
   exec(elem, options?: ExecOptions) {
-    const $elem = $(elem)
+    const $elem = $(elem);
   
     this.helper.actionCache.$elem = $elem;
     this.hideSiblings($elem);
@@ -20,13 +20,13 @@ export default class ReadMode extends Base {
       this.initModePlus($elem)
     }
   
-    this.recordIfNeeded(options, elem)
+    this.recordIfNeeded(options, elem);
 
     return true
   }
 
   checkExecResult(elem, options?: ExecOptions) {
-    const result = document.body.contains(elem)
+    const result = document.body.contains(elem);
     if (!result) {
       this.autoMationFn()
     }
@@ -47,47 +47,47 @@ export default class ReadMode extends Base {
   }
 
   private layoutEl($el) {
-    const top = $el.offset().top
+    const top = $el.offset().top;
 
     window.scrollTo(0, top - 200)
   }
 
   private initModePlus($el) {
-    let cur = $el
+    let cur = $el;
     const fnCreator = fn => () => {
-      this.hideEl(cur)
-      const target = fn(cur)
+      this.hideEl(cur);
+      const target = fn(cur);
 
       if (target && target.length) {
         if (!target.hasClass('.s-a-rm-hn')) {
           this.hideSiblings(target)
         }
-        cur = target
-        this.showEl(target)
+        cur = target;
+        this.showEl(target);
         this.layoutEl(target)
       }
-    }
-    const nextFn = fnCreator(cur => cur.next())
-    const prevFn = fnCreator(cur => cur.prev())
+    };
+    const nextFn = fnCreator(cur => cur.next());
+    const prevFn = fnCreator(cur => cur.prev());
 
-    keyboardJS.bind('right', nextFn)
-    keyboardJS.bind('left', prevFn)
+    keyboardJS.bind('right', nextFn);
+    keyboardJS.bind('left', prevFn);
 
     this.unbindFns.push(() => {
-      keyboardJS.unbind('right', nextFn)
+      keyboardJS.unbind('right', nextFn);
       keyboardJS.unbind('left', prevFn)
     })
   }
 
   private hideSiblings($el) {
-    const that = this
+    const that = this;
 
     if ($el && $el.length) {
       this.hideEl($el.siblings().not('#steward-main,#wordcard-main'))
       this.hideSiblings($el.parent())
     } else {
       keyboardJS.bind('esc', function showNode() {
-        that.showEl($(that.selector))
+        that.showEl($(that.selector));
         that.helper.resetActionCache();
         keyboardJS.unbind('esc', showNode);
         that.exit()

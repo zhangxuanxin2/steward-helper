@@ -9,7 +9,7 @@ import { BUILDIN_ACTIONS, PAGE_ACTIONS, APP_ACTIONS, BUILDIN_ACTION_CONFIGS, WEB
 import hanlder from './helper/others';
 import { create as createNotice } from './helper/notifications';
 
-let automations: IAutomation[] = []
+let automations: IAutomation[] = [];
 
 interface BadgeItem {
   url: string;
@@ -17,16 +17,16 @@ interface BadgeItem {
 }
 
 class BadgesHelper {
-  list: BadgeItem[]
-  maxLength: number
+  list: BadgeItem[];
+  maxLength: number;
 
   constructor() {
-    this.list = []
+    this.list = [];
     this.maxLength = 20
   }
 
   getItem(url): string {
-    const item = this.list.find(item => item.url === url)
+    const item = this.list.find(item => item.url === url);
 
     if (item) {
       return item.text
@@ -36,7 +36,7 @@ class BadgesHelper {
   }
 
   setItem(item: BadgeItem) {
-    const result = this.list.find(tab => tab.url === item.url)
+    const result = this.list.find(tab => tab.url === item.url);
 
     if (result) {
       result.text = item.text
@@ -50,17 +50,17 @@ class BadgesHelper {
   }
 }
 
-const badgesHelper = new BadgesHelper()
+const badgesHelper = new BadgesHelper();
 
 function updateBadge(url) {
   if (url.startsWith('http')) {
-    chrome.browserAction.enable()
+    chrome.browserAction.enable();
     chrome.browserAction.setBadgeText({
       text: badgesHelper.getItem(url)
     })
     
   } else {
-    chrome.browserAction.disable()
+    chrome.browserAction.disable();
     chrome.browserAction.setBadgeText({
       text: ''
     })
@@ -68,7 +68,7 @@ function updateBadge(url) {
 }
 
 function onAutomations(data, handler) {
-  const records = updateBadgeByURL(data.url)
+  const records = updateBadgeByURL(data.url);
 
   if (handler) {
     handler(records)
@@ -78,7 +78,7 @@ function onAutomations(data, handler) {
 function onRefreshAutmations(handler) {
   loadAutomations().then(() => {
     updateBadgeByCurrentTab()
-  })
+  });
   handler('')
 }
 
@@ -92,10 +92,10 @@ function onInstallAutomation(data, handler) {
   installAutomation(data.instructions, data.pattern).then((resp) => {
     if (resp.code === 0) {
       createNotice('Automation installed successfully', `Automation: 「${data.name}」`,
-        chrome.extension.getURL('img/success.png'))
+        chrome.extension.getURL('img/success.png'));
       loadAutomations().then(() => {
         updateBadgeByCurrentTab()
-      })
+      });
       noticeCurTab({
         id: data.id
       })
@@ -103,7 +103,7 @@ function onInstallAutomation(data, handler) {
       createNotice('Automation installed failed', `Reason: 「${resp.message}」`,
         chrome.extension.getURL('img/fail.png'))
     }
-  })
+  });
   handler('')
 }
 
@@ -115,21 +115,21 @@ function msgHandler(req: PageMsg, sender, resp) {
       msg: `${action} response`,
       callbackId,
       data: results
-    }
+    };
     resp(msg)
   }
 
   if (action === PAGE_ACTIONS.RECORD) {
-    const { content, url, domain } = data
+    const { content, url, domain } = data;
 
-    recordsController.saveRecord(content, url, domain)
+    recordsController.saveRecord(content, url, domain);
     handler('')
   } else if (action === PAGE_ACTIONS.AUTOMATIONS) {
     onAutomations(data, handler);
   } else if (action === PAGE_ACTIONS.REFRESH_AUTOMATIONS) {
     onRefreshAutmations(handler)
   } else if (action === APP_ACTIONS.IMPORT_DATA) {
-    init()
+    init();
     handler('')
   } else if (action === WEB_ACTIONS.INSTALL_AUTOMATION) {
     onInstallAutomation(data, hanlder)
@@ -159,21 +159,21 @@ function initCommands() {
 }
 
 function updateBadgeByURL(url: string) {
-  const records = matchAutomations(automations, url)
-  const realNum = records.filter(item => item.active).length
+  const records = matchAutomations(automations, url);
+  const realNum = records.filter(item => item.active).length;
 
   badgesHelper.setItem({
     url: url,
     text: realNum ? String(realNum) : ''
-  })
-  updateBadge(url)
+  });
+  updateBadge(url);
 
   return records
 }
 
 function updateBadgeByCurrentTab() {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const url = tabs[0].url
+    const url = tabs[0].url;
 
     if (url) {
       updateBadgeByURL(url)
@@ -191,8 +191,7 @@ chrome.tabs.onActivated.addListener(function () {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     updateBadge(tabs[0].url)
   });
-})
-
+});
 function loadAutomations() {
   return automationController.getList().then((resp) => {
     automations = <IAutomation[]>resp.data
@@ -200,8 +199,8 @@ function loadAutomations() {
 }
 
 function init() {
-  loadAutomations()
+  loadAutomations();
   initCommands()
 }
 
-init()
+init();

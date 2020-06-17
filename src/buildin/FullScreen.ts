@@ -1,26 +1,26 @@
 import Base, { ExecOptions } from './base'
 import { BUILDIN_ACTIONS } from '../common/const';
-import $ = require('jquery')
+import $ = require('jquery');
 
 export default class FullScreen extends Base {
-  name = BUILDIN_ACTIONS.FULL_SCREEN
-  cls: string = 'ext-hp-fullscreen'
+  name = BUILDIN_ACTIONS.FULL_SCREEN;
+  cls: string = 'ext-hp-fullscreen';
 
   style = `
     .ext-hp-fullscreen { font-size: 20px!important; line-height: 1.3!important; }
     .ext-hp-fullscreen span { font-size: 20px!important; } 
-  `
+  `;
 
-  private unsetFullScreenElem: Function
+  private unsetFullScreenElem: Function;
 
   private setupFullScreenElem(elem, event) {
-    const pv = (window.innerHeight - elem.clientHeight) / 2
-    const ph = (window.innerWidth - elem.clientWidth) / 2
-    const bgc = window.getComputedStyle(elem).backgroundColor
-    const ovf = elem.clientHeight > window.innerHeight
-    const paddings = []
+    const pv = (window.innerHeight - elem.clientHeight) / 2;
+    const ph = (window.innerWidth - elem.clientWidth) / 2;
+    const bgc = window.getComputedStyle(elem).backgroundColor;
+    const ovf = elem.clientHeight > window.innerHeight;
+    const paddings = [];
 
-    elem.setAttribute('data-padding', elem.style.padding)
+    elem.setAttribute('data-padding', elem.style.padding);
     if (event.metaKey) {
       $(elem).addClass(this.cls)
     }
@@ -35,19 +35,19 @@ export default class FullScreen extends Base {
       paddings.push('0')
     }
 
-    elem.style.padding = paddings.join(' ')
+    elem.style.padding = paddings.join(' ');
 
     if (bgc === 'rgba(0, 0, 0, 0)') {
-      elem.setAttribute('data-bgc', bgc)
+      elem.setAttribute('data-bgc', bgc);
       elem.style.backgroundColor = '#fff'
     }
     if (ovf) {
-      elem.setAttribute('data-ovf', elem.style.overflow)
+      elem.setAttribute('data-ovf', elem.style.overflow);
       elem.style.overflow = 'auto'
     }
 
     return () => {
-      elem.style.padding = elem.getAttribute('data-padding')
+      elem.style.padding = elem.getAttribute('data-padding');
       if (elem.hasAttribute('data-bgc')) {
         elem.style.backgroundColor = elem.getAttribute('data-bgc')
       }
@@ -70,10 +70,10 @@ export default class FullScreen extends Base {
 
   exec(elem, options?: ExecOptions) {
     if (elem.requestFullscreen) {
-      this.unsetFullScreenElem = this.setupFullScreenElem(elem, event)
+      this.unsetFullScreenElem = this.setupFullScreenElem(elem, event);
       requestAnimationFrame(() => {
         elem.requestFullscreen()
-      })
+      });
 
       return true
     } else {

@@ -24,4 +24,4 @@ export const EXISTS = {
 export const NOT_EXISTS = {
     code: 103,
     msg: 'record not exists'
-}
+};

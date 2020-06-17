@@ -20,7 +20,7 @@ window.addEventListener('message', function(event) {
                     action: 'highlightEnglishSyntax',
                     data: resp.data,
                     callbackId: event.data.callbackId
-                }
+                };
                 // https://github.com/Microsoft/TypeScript/issues/26403#issuecomment-444382398
                 if (event.source instanceof Window) {
                     event.source.postMessage(msg, '*', []);

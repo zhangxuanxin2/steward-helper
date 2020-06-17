@@ -5,7 +5,7 @@ export function getAll(params = {}) {
 }
 
 export default function hanlder(req) {
-  const { data, action } = req
+  const { data, action } = req;
 
   if (action === 'cookies.getAll') {
     return getAll(data)

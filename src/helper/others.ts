@@ -10,7 +10,7 @@ function highlightEnglish(text) {
 }
 
 export default async function hanlder(req) {
-  const { data, action } = req
+  const { data, action } = req;
 
   if (action === 'others.highlightEnglishSyntax') {
     return highlightEnglish(data.text)

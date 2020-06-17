@@ -4,7 +4,7 @@ import { handleWebEvents, noticeWeb } from './helper/web';
 
 function bindAppEvents() {
   chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
-    const { method, data } = req
+    const { method, data } = req;
 
     if (method === WEB_ACTIONS.INSTALL_DONE) {
       noticeWeb(method, data)
@@ -29,7 +29,7 @@ function bindWebsiteEvents() {
 }
 
 function init() {
-  bindAppEvents()
+  bindAppEvents();
   bindWebsiteEvents()
 }
 

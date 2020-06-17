@@ -1,11 +1,11 @@
 import Base, { ExecOptions, defaultExecOptions } from './base'
 import { BUILDIN_ACTIONS } from '../common/const';
-import $ = require('jquery')
+import $ = require('jquery');
 import { copyToClipboard } from '../helper/others';
 
 export default class CodeCopy extends Base {
-  name = BUILDIN_ACTIONS.CODE_COPY
-  cls: 'ext-hp-code-copy'
+  name = BUILDIN_ACTIONS.CODE_COPY;
+  cls: 'ext-hp-code-copy';
   style = `
     .ext-hp-code-copy { 
       cursor: pointer;
@@ -24,10 +24,10 @@ export default class CodeCopy extends Base {
     .ext-hp-code-copy::after {
       content: "\\e618";
     }
-  `
-  shouldRecord = true
+  `;
+  shouldRecord = true;
 
-  private inited = false
+  private inited = false;
 
   start() {
     this.exec(document.body, {}) 
@@ -44,7 +44,7 @@ export default class CodeCopy extends Base {
   }
 
   private insertCopyBtn(codeElem: HTMLElement, options?: ExecOptions) {
-    const position = options ? options.pos : 'tl'
+    const position = options ? options.pos : 'tl';
 
     if (options.inpre) {
       codeElem.parentElement.style.position = 'relative';
@@ -58,10 +58,10 @@ export default class CodeCopy extends Base {
   }
 
   exec(elem, options?: ExecOptions) {
-    this.helper.insertCss()
+    this.helper.insertCss();
 
     const selected = options.pre ? 'pre' : 'code';
-    const elems = Array.from(document.querySelectorAll(selected))
+    const elems = Array.from(document.querySelectorAll(selected));
 
     if (elems.length) {
       elems.forEach((codeElem) => {
@@ -72,13 +72,13 @@ export default class CodeCopy extends Base {
         } else {
           this.insertCopyBtn(codeElem, options);
         }
-      })
+      });
       $(document).on('click', '.ext-hp-code-copy', function() {
-        const text = this.parentElement.textContent
+        const text = this.parentElement.textContent;
         copyToClipboard(text)
-      })
+      });
     
-      this.recordIfNeeded(options)
+      this.recordIfNeeded(options);
       this.inited = true
     }
 

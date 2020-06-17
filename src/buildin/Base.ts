@@ -26,21 +26,21 @@ export interface ExecOptions {
 }
 
 export const defaultExecOptions: ExecOptions = {
-}
+};
 
 export default class Base {
-  name: string
-  helper: DomHelper
-  autoMationFn?: Function
-  cls?: string
-  style?: string
-  shouldRecord?: boolean
-  unbindFns: any[]
+  name: string;
+  helper: DomHelper;
+  autoMationFn?: Function;
+  cls?: string;
+  style?: string;
+  shouldRecord?: boolean;
+  unbindFns: any[];
 
   constructor(helper: DomHelper) {
-    this.helper = helper
-    this.unbindFns = []
-    helper.actions.push(this)
+    this.helper = helper;
+    this.unbindFns = [];
+    helper.actions.push(this);
     this.bindEvents()
   }
 
@@ -53,7 +53,7 @@ export default class Base {
     this.helper.exec((elem, event) => {
       const options: ExecOptions = {
         metaKey: event.metaKey
-      }
+      };
       this.run(elem, options)
     })
   }
@@ -61,8 +61,7 @@ export default class Base {
   // called by UI or automation
   // run and check result if needed
   run(elem, options) {
-    const result = this.exec(elem, options)
-
+    const result = this.exec(elem, options);
     if (result) {
       setTimeout(() => {
         this.checkExecResult(elem, options)
@@ -90,7 +89,7 @@ export default class Base {
   exit() {
     this.unbindFns.forEach(fn => {
       fn()
-    })
+    });
     this.unbindFns = []
   }
 }

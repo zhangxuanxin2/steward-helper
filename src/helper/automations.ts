@@ -6,16 +6,16 @@ import { saveAutomation } from '../server/controller/automations.controller'
 
 export function matchAutomations(list: IAutomation[], url: string): IAutomation[] {
   return list.filter(item => {
-    const { pattern } = item
-    const regExp = new RegExp("^" + pattern.replace(/\*/g, ".*") + "$")
+    const { pattern } = item;
+    const regExp = new RegExp("^" + pattern.replace(/\*/g, ".*") + "$");
 
     return regExp.test(url)
   })
 }
 
 export async function installAutomation(instructions, pattern) {
-  const list = await getAll()
-  const hasOne = list.find(item => item.instructions === instructions && item.pattern === pattern)
+  const list = await getAll();
+  const hasOne = list.find(item => item.instructions === instructions && item.pattern === pattern);
 
   if (hasOne) {
     return Response.error(EXISTS)

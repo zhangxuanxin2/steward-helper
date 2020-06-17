@@ -6,7 +6,7 @@ export const ACTIONS = {
   AUTOMATION_FORM_UPDATE: 'initAutomationForm',
   AUTOMATION_FORM_CLOSE: 'automationFormClose',
   AUTOMATIONS: 'AUTOMATIONS'
-}
+};
 
 export function pageReducer(state, action) {
   const { type, payload } = action;

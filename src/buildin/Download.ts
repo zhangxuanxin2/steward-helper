@@ -1,14 +1,14 @@
 import Base, { defaultExecOptions, ExecOptions } from './base'
 import { BUILDIN_ACTIONS } from '../common/const';
-import $ = require('jquery')
+import $ = require('jquery');
 import { getHost } from '../helper/url';
 
 export default class Download extends Base {
-  name = BUILDIN_ACTIONS.DOWNLOAD
-  shouldRecord = true
+  name = BUILDIN_ACTIONS.DOWNLOAD;
+  shouldRecord = true;
   
-  private downloaded = true
-  private autoclose = false
+  private downloaded = true;
+  private autoclose = false;
 
   private downloadURL(url, fileName?, type?: string) {
     if (url.startsWith('//')) {
@@ -34,7 +34,7 @@ export default class Download extends Base {
   private getFileNameByURL(elem, url, type = 'file', ext?) {
     const baseName = elem.getAttribute('alt') || elem.getAttribute('title') || type
     if (!ext) {
-      const m = url.match(/\.(\w+)$/)
+      const m = url.match(/\.(\w+)$/);
       if (m) {
         ext = m[1]
       } else {
@@ -46,12 +46,12 @@ export default class Download extends Base {
   }
 
   private downloadBg(elem): boolean {
-    const bgImg = window.getComputedStyle(elem).backgroundImage
-    const match = bgImg.match(/url\(["']?(.*\w)["']?\)/)
+    const bgImg = window.getComputedStyle(elem).backgroundImage;
+    const match = bgImg.match(/url\(["']?(.*\w)["']?\)/);
   
     if (match) {
-      const url = match[1]
-      this.downloadURL(url, this.getFileNameByURL(elem, url, 'background'), 'img')
+      const url = match[1];
+      this.downloadURL(url, this.getFileNameByURL(elem, url, 'background'), 'img');
   
       return true
     } else {
@@ -64,12 +64,12 @@ export default class Download extends Base {
   }
 
   private downloadSource(elem): boolean {
-    const url = elem.getAttribute('src')
+    const url = elem.getAttribute('src');
   
     if (url) {
-      const tag: string = elem.tagName.toLowerCase()
+      const tag: string = elem.tagName.toLowerCase();
   
-      this.downloadURL(url, this.getFileNameByURL(elem, url, tag), tag)
+      this.downloadURL(url, this.getFileNameByURL(elem, url, tag), tag);
   
       return true
     } else {
@@ -84,13 +84,13 @@ export default class Download extends Base {
   }
 
   exec(elem, options?: ExecOptions) {
-    const tagName = elem.tagName
+    const tagName = elem.tagName;
   
-    this.autoclose = options.autoclose
+    this.autoclose = options.autoclose;
 
     if (['VIDEO', 'IMG', 'AUDIO', 'SOURCE'].indexOf(tagName) !== -1) {
-      const result = this.downloadSource(elem)
-      this.downloaded = result
+      const result = this.downloadSource(elem);
+      this.downloaded = result;
   
       if (result) {
         this.recordIfNeeded(options, elem)
@@ -98,8 +98,8 @@ export default class Download extends Base {
   
       return true
     } else {
-      const result = this.downloadBg(elem)
-      this.downloaded = result
+      const result = this.downloadBg(elem);
+      this.downloaded = result;
   
       if (result) {
         this.recordIfNeeded(options, elem)

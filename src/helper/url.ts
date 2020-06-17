@@ -10,13 +10,13 @@ function getURL(url = '') {
 }
 
 export function getPath(url) {
-  const u = getURL(url)
+  const u = getURL(url);
 
   return u?.pathname
 }
 
 export function getHost(url) {
-  const u = getURL(url)
+  const u = getURL(url);
 
   return u?.host
 }
